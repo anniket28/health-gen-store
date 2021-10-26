@@ -1,0 +1,315 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif&family=Patrick+Hand&display=swap');
+*{
+    font-family: 'Patrick Hand', cursive;
+font-family: 'PT Serif', serif;
+}
+.logoimg{
+    width: 4.9%;
+    margin-left: 50px !important;
+    margin-right: 5px !important;
+}
+.logo{
+    color: white !important;
+    font-size: 23px !important;
+}
+.navm{
+    margin-right: 50px !important;
+}
+.navl{
+    padding: 0px 15px !important;
+    color: white !important;
+    font-size: 18px;
+}
+.navl:hover{
+    background-color: white !important;
+    color: rgb(0, 0, 0) !important;
+    border-radius: 10px;
+    transform: scale(1.1);
+}
+.navd{
+    color: white !important ;
+    font-size: 17px;
+    background-color: #17a2b8!important;
+    border-bottom: 1px solid black !important;
+}
+.navd:hover{
+    color: black !important
+}
+.active{
+    color:rgb(255, 255, 115) !important;
+}
+footer{
+    width: 100%;
+    /* position: absolute;
+    bottom: 0; */
+    padding: 10px 0px;
+    color: white !important;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 300px !important;
+}
+.cont{
+    margin-top: 13px !important;
+}
+.cont a{
+    color: white;
+    text-decoration: none;
+}
+.cont a:hover{
+    color: black;
+    background-color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 3px;
+}
+.copy{
+    margin-bottom: 13px !important;
+}
+.about{
+    width: 60%;
+    margin: auto;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 0px 25px;
+}
+.about h1{
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+.about p{
+    margin-bottom: 25px;
+    text-align: justify;
+}
+.card{
+    margin: auto !important;
+    width: 60%;
+    margin-top: 100px !important;
+    border-width: 2px !important;
+    border-radius: 10px !important;
+}
+.cardsu{
+    width: 50%;
+}
+.card h1{
+    text-align: center;
+}
+input[type="password"]{
+    margin-bottom: 5px;
+}
+form button{
+    width: 100%;
+    font-size: 17px !important;
+    margin-top: 10px !important;
+    margin-bottom: 15px !important;
+}
+/* .navdu{
+    background-color: gray !important;
+    color: white !important ;
+    font-size: 17px;
+    border-bottom: 1px solid white !important;
+}
+.navdu:hover{
+    background-color: rgb(90, 90, 90) !important;
+} */
+.jumbotron{
+    padding-top: 7px !important;
+    margin-bottom: 0px !important;
+    padding-bottom: 25px !important;
+}
+.prod{
+    text-align: center !important;
+    font-weight: bolder;
+    font-size: 75px !important;
+    margin-bottom: 30px !important;
+    /* text-decoration: underline; */
+    text-decoration-thickness: 3px ;
+}
+.prodc{
+    text-align: center;
+    display: flex;
+    margin: auto !important;
+    justify-content: center;
+}
+.card-body a{
+    color: black !important;
+    text-decoration: none !important;
+}
+.card-title{
+    text-align: center !important;
+    display: block;
+}
+.card-text{
+    text-align: center !important;
+    font-weight: bolder;
+}
+/* .card{
+    width: 50% !important;
+    margin-top: 100px !important;
+    align-items: center !important;
+}
+.card-body a{
+    color: black !important;
+    text-decoration: none !important;
+}
+.btns1{
+    color: black !important;
+    text-decoration: none !important;
+}
+.card-title{
+    text-align: center !important;
+    display: block;
+}
+.cards{
+    height: 505.88px !important;
+}
+.cards .item{
+    padding: 20px !important;
+}
+.card-text{
+    text-align: center !important;
+    font-weight: bolder;
+}
+.img-thumbnail{
+    width: 75%;
+    margin: auto !important;
+    display: block;
+    margin-top: 25px !important;
+}
+.img36{
+    width: 77%;
+    margin: auto !important;
+    display: block;
+    margin-top: 25px !important;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+}
+.c1{
+    margin-right: 50px !important;
+}
+.c3{
+    margin-left: 50px !important;
+} */
+.dropdown .btn{
+    background-color: rgb(148, 148, 148) !important;
+    margin-bottom: 20px;
+}
+input{
+    height: 38px !important;
+}
+form .btn{
+    width: 16% !important;
+    height: 96% !important;
+}
+.sc{
+    margin-right: 1.9% !important;
+}
+.lead{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* align-items: stretch; */
+}
+form{
+    display: flex;
+    width: 100%;
+    /* margin: auto; */
+}
+.row{
+    margin-left: 30px !important;
+    margin-right: 30px !important;
+}
+.card{
+    width: 100%;
+    align-items: center !important;
+    /* height: 505.88px !important; */
+    margin-top: 75px !important;
+}
+.img-thumbnail{
+    width: 75%;
+    margin: auto !important;
+    display: block;
+    margin-top: 25px !important;
+}
+.desc{
+    display: none;
+    border: 1px solid black;
+    border-radius: 7px;
+    padding: 10px;
+    margin: 15px 20px;
+}
+.desc h6{
+    text-align: center;
+    font-weight: bolder;
+    text-decoration: underline;
+    font-size: 20px !important;
+}
+.desc .cat{
+    text-align: center;
+    font-weight: bold;
+}
+.desc p{
+    text-align: justify;
+}
+a:hover + .desc{
+    display: block;
+    z-index: 1;
+}
+.cards .item{
+    padding: 20px !important;
+}
+#btn-back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    z-index: 1;
+  }
+  ul li a.cart .cart-basket {
+    font-size: 16px;
+    position: absolute;
+    top: -10px;
+    right: -3px;
+    width: 25px;
+    height: 25px;
+    color: #fff;
+    background-color: #418deb;
+    border-radius: 50%;
+  }
+  .navl{
+    margin: 7px 5px;
+}
+.navuser{
+    padding-right: 3px !important;
+    padding-left: 8px !important;
+}
+.navcont{
+    padding-left: 13px !important;
+
+}
+.navcart{
+    padding-left: 7px !important;
+}
+.mycart{
+    margin-top: 15px;
+}
+.mycart h1{
+    text-align: center;
+    font-size: 45px;
+}
+.card-body{
+    margin: auto !important;
+    text-align: center;
+}
+.btn-info{
+    background-color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+}
+.btnb:hover{
+    color: white !important;
+}

@@ -1,0 +1,319 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif&family=Patrick+Hand&display=swap');
+*{
+    font-family: 'Patrick Hand', cursive;
+font-family: 'PT Serif', serif;
+}
+.logoimg{
+    width: 4.9%;
+    margin-left: 50px !important;
+    margin-right: 5px !important;
+}
+.logo{
+    color: white !important;
+    font-size: 23px !important;
+}
+.navm{
+    margin-right: 50px !important;
+}
+.navl{
+    padding: 0px 15px !important;
+    color: white !important;
+    font-size: 18px;
+}
+.navl:hover{
+    background-color: white !important;
+    color: rgb(0, 0, 0) !important;
+    border-radius: 10px;
+    transform: scale(1.1);
+}
+.navd{
+    color: white !important ;
+    font-size: 17px;
+    background-color: #17a2b8!important;
+    border-bottom: 1px solid black !important;
+}
+.navd:hover{
+    color: black !important
+}
+.active{
+    color:rgb(255, 255, 169) !important;
+}
+footer{
+    width: 100%;
+    /* position: absolute;
+    bottom: 0; */
+    padding: 10px 0px;
+    color: white !important;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 50px;
+}
+.cont{
+    margin-top: 13px !important;
+}
+.cont a{
+    color: white;
+    text-decoration: none;
+}
+.cont a:hover{
+    color: black;
+    background-color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 3px;
+}
+.copy{
+    margin-bottom: 13px !important;
+}
+.about{
+    width: 60%;
+    margin: auto;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 0px 25px;
+}
+.about h1{
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+.about p{
+    margin-bottom: 25px;
+    text-align: justify;
+}
+.card{
+    margin: auto !important;
+    width: 60%;
+    margin-top: 50px !important;
+    border-width: 2px !important;
+    border-radius: 10px !important;
+}
+.cardsu{
+    width: 50%;
+}
+.card h1{
+    text-align: center;
+}
+input[type="password"]{
+    margin-bottom: 5px;
+}
+form .btns{
+    width: 100%;
+    font-size: 17px !important;
+    /* margin-top: 10px !important; */
+    /* margin-bottom: 15px !important; */
+}
+.st{
+    margin: 10px 0px !important;
+}
+.rst{
+    margin: 0px !important;
+}
+.acc{
+    margin-top: 15px;
+}
+.fname,.lname,.mail,.pass,.cont,.city,.zcode{
+    font-size: 18px ;
+}
+#btn-back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    z-index: 1;
+  }
+
+/* RESPONSIVENESS */
+@media only screen and (max-width: 600px) {
+    .row{
+        margin: 0px 15px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px 10px !important;
+    }
+    .main .card{
+        width: 100%;
+    }
+    .logo{
+        font-size: 30px !important;
+    }
+    .about{
+        width: 100%;
+    }
+    .about img{
+        width: 25% !important;
+    }
+    .about h2{
+        font-size: 27px;
+    }
+    .logoimg{
+        width: 15%;
+        margin: auto !important;
+        display: block !important;
+    }
+    footer{
+        font-size: 23px !important ;
+    }
+    nav{
+        display: flex;
+        flex-direction: column;
+    }
+    .main h1{
+        font-size: 39px !important;
+    }
+    .h3{
+        padding: 5px;
+    }
+    .navbar-nav{
+        margin-top: 10px !important;
+    }
+    .nav-item{
+        padding: 5px !important;
+    } 
+    .login{
+        margin: 0px 15px;
+    }
+    .login .card{
+        width: 100%;
+    }
+}
+@media only screen and (min-width:601px) and (max-width: 800px) {
+    .logoimg{
+        width: 8%;
+    }
+    .logo{
+        font-size: 25px !important;
+    }
+    .navbar-nav{
+        margin-top: 15px !important;
+    }
+    .nav-item{
+        padding: 5px !important;
+    } 
+    .h3{
+        padding: 0px 7px;
+    }
+    .row{
+        margin: 0px 15px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px 30px !important;
+    }
+    .main .card{
+        width: 100%;
+    }
+    .img-thumbnail{
+        width: 40% !important;
+    }
+    .about p{
+        font-size: 20px;
+    }
+    .about{
+        width: 100%;
+    }
+    .about img{
+        width: 20% !important;
+    }
+    .about h2{
+        font-size: 40px;
+    }
+    .login{
+        margin: 0px 15px;
+    }
+    .login .card{
+        width: 100%;
+    }
+}
+@media only screen and (min-width:801px) and (max-width: 1000px) {
+    .logoimg{
+        width: 7% !important;
+    }
+    .navbar-collapse{
+        margin-bottom: 12px !important;
+    }
+    .navm{
+        margin-right: 0px !important;
+    }
+    .img-thumbnail{
+        width: 35% !important;
+    }
+    .about{
+        width: 100%;
+    }
+    .about img{
+        width: 25% !important;
+    }
+    .about h2{
+        font-size: 27px;
+    }
+    .login{
+        margin: 0px 15px;
+    }
+    .login .card{
+        width: 100%;
+    }
+}
+@media only screen and (min-width:1001px) and (max-width: 1200px) {
+    .logo{
+        font-size: 30px !important;
+    }
+    .navl{
+        font-size: 18px !important;
+    }
+    .main h1{
+        font-size: 45px !important;
+    }
+    .jumbotron h3{
+        font-size: 35px !important;
+    }
+    .h3{
+        font-size: 30px !important;
+    }
+    .h{
+        font-size: 30px !important;
+    }
+    .card-body{
+        font-size: 25px !important;
+    }
+    .card-title{
+        font-size: 40px !important;
+    }
+    footer{
+        font-size: 30px !important;
+    }
+    .logoimg{
+        width: 7% !important;
+    }
+    .navbar-collapse{
+        margin-bottom: 0px 10px !important;
+    }
+    .navm{
+        margin-right: 0px !important;
+    }
+    .img-thumbnail{
+        width: 35% !important;
+    }
+    .about{
+        width: 100%;
+    }
+    .about img{
+        width: 15% !important;
+    }
+    .about h2{
+        font-size: 40px;
+    }
+    .about p{
+        font-size: 20px;
+    }
+    .login{
+        margin: 0px 15px;
+    }
+    .login .card{
+        width: 100%;
+    }
+}
+.navbar-toggler{
+    background-color: white !important;
+}

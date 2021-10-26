@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/login.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <title>Login | Health&Gen Store</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+        <img class="img-fluid rounded-circle logoimg" src="static/images/logo.jpeg" alt="Logo">
+        <a class="navbar-brand logo">Health&Gen Store</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link navl" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link navl" href="/aboutus">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link navl active disabled" href="/login"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+              </svg><i class="bi bi-box-arrow-in-right"></i> Login<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link navl" href="/signup"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-person-fill" viewBox="0 0 16 16">
+                <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-1 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-3 4c2.623 0 4.146.826 5 1.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-1.245C3.854 11.825 5.377 11 8 11z"/>
+              </svg><i class="bi bi-file-person-fill"></i> Sign Up</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle navl navm" href="javascript:void(0)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Contact Us
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item navd" href="tel:+8427224992"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                  </svg><i class="bi bi-telephone-fill"></i> Call Us</a>
+                <a class="dropdown-item navd" href="mailto:sanjayzrk3@gmail.com"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                    <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
+                  </svg><i class="bi bi-envelope-fill"></i> Email Us</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <% if(success.length>0){ %>
+        <div class="alert alert-dismissible alert-success fade show" role="alert" style="margin-top: 1px !important; font-size: 20px;">
+            <%= success %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </div>
+    <% } %>    
+    <% if(successp.length>0){ %>
+      <div class="alert alert-dismissible alert-success fade show" role="alert" style="margin-top: 1px !important; font-size: 20px;">
+          <%= successp %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </div>
+  <% } %>    
+      <section class="login">
+        <div class="card">
+            <div class="card-body">
+              <h1 class="card-title">LOGIN</h1>
+              <p class="card-text">
+                <form action="/loginuser" method="post">
+                    <div class="form-group">
+                        <% if(erroru.length>0){ %>
+                            <div class="alert-danger alert alert-dismissible fade show" role="alert">
+                                <%= erroru %>
+                                <button type="submit" class="close" data-dismiss="alert" aria-label="close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <% } %>
+                        <% if(messagea.length>0){ %>
+                            <div class="alert-warning alert alert-dismissible fade show" role="alert" style="font-size: 20px;">
+                                <%= messagea %>
+                                <button type="submit" class="close" data-dismiss="alert" aria-label="close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <% } %>
+                      <label for="mail"><span class="mail">Email :</span></label>
+                      <input type="email" class="form-control" id="mail" name="email" placeholder="Enter your email here." required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" oninvalid="this.setCustomValidity('Email is either empty or invalid.')" oninput="this.setCustomValidity('')">
+                    </div>
+                    <div class="form-group">
+                      <label for="pass"><span class="pass">Password :</span></label>
+                      <input type="password" class="form-control" id="pass" name="password" placeholder="Enter your password here." required oninvalid="this.setCustomValidity('Password is required')" oninput="this.setCustomValidity('')">
+                      <% if(errorp.length>0){ %>
+                        <div class="alert alert-dismissible alert-danger fade show" role="alert" style="font-size: 20px;">
+                            <%= errorp %>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                            </div>
+                    <% } %>
+                      <a href="/forgotPassword" style="font-size: 18px !important;" class="card-link fpass">Forgot Password</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary btns">Submit</button>
+                </form> 
+                <p style="font-size: 18px !important;">Don't Have an Account.<a class="card-link" href="/signup"> Create One</a></p>
+              </p>
+            </div>
+          </div>
+      </section>
+      <footer class="bg-secondary" style="font-size: 18.5px;">
+          <p class="cont">Email : <a href="mailto:sanjayzrk3@gmail.com ">sanjayzrk3@gmail.com </a>| Contact Number : <a href="tel:+8427224992">+91 8427224992</a> , <a href="tel:+7347299512">+91 7347299512</a></p>
+          <p class="copy">Health&Gen Store &copy; Copyright | All Rights Reserved</p>
+      </footer>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+</html>
