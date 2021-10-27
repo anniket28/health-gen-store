@@ -15,7 +15,7 @@ var nodemailer = require('nodemailer');
 const crypto=require('crypto')
 
 // DATABASE CONNECTION
-mongoose.connect('mongodb://localhost:27017/HealthandGenStore', {useNewUrlParser:true, useUnifiedTopology:true})
+mongoose.connect('mongodb+srv://bhalla28:Bhalla2001@cluster0.r1azc.mongodb.net/healthandgenstore?retryWrites=true&w=majority',{useNewURLParser: true, useUnifiedTopology: true})
 
 // USER SIGNUP SCHEMA
 const registerSchema=new mongoose.Schema({
@@ -250,7 +250,7 @@ app.use(session({
     saveUninitialized: false ,
     cookie: { maxAge: 24 * 60 * 60 * 1000 },
     store:MongoStore.create({
-        mongoUrl: 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false',
+        mongoUrl: 'mongodb+srv://bhalla28:Bhalla2001@cluster0.r1azc.mongodb.net/healthandgenstore?retryWrites=true&w=majority',
         dbName:'website',
         collectionName:'sessions'
     })
