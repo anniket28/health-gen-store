@@ -8,7 +8,7 @@ const cookieParser=require('cookie-parser')
 var session=require('express-session')
 var flash=require('connect-flash')
 var Product=require('./products')
-const port=8000
+const PORT=process.env.PORT || 8080
 var MongoStore=require('connect-mongo')
 const products = require('./products')
 var nodemailer = require('nodemailer');
@@ -261,6 +261,7 @@ app.use(cookieParser())
 // SET
 app.set('view-engine','ejs')
 app.set('views',path.join(__dirname,'views'))
+app.set("port",PORT);
 // app.set('trust proxy', 1)
 
 // HOME PAGE
@@ -768,6 +769,6 @@ const logout=(req,res)=>{
 app.get('/logout',logout)
 
 // APP RUN
-app.listen(port,()=>{
-    console.log(`Port at ${port}`)
+app.listen(PORT,()=>{
+    console.log(`Port at ${{PORT}}`)
 })

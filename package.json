@@ -2,11 +2,10 @@
   "name": "website-ejs",
   "version": "1.0.0",
   "description": "This is a medical equipment ecommerce website.",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
-    
   },
   "author": "Anniket Bhalla",
   "license": "ISC",
