@@ -281,24 +281,28 @@ app.get('/login',(req,res)=>{
 
 // CHECK FOR USER LOGIN
 const logincheck= async(req,res)=>{
-    var bodyl=req.body
-    var userl=await userRegister.findOne({email:bodyl.email})
-    if(userl){
-        const validPassword=await bcrypt.compare(bodyl.password,userl.password)
-        if(validPassword){
-            sess=req.session
-            sess.email=userl.email
-            req.flash('message','Login Successful.')
-            res.redirect('/products')
+    try {
+        var bodyl=req.body
+        var userl=await userRegister.findOne({email:bodyl.email})
+        if(userl){
+            const validPassword=await bcrypt.compare(bodyl.password,userl.password)
+            if(validPassword){
+                sess=req.session
+                sess.email=userl.email
+                req.flash('message','Login Successful.')
+                res.redirect('/products')
+            }
+            else{
+                req.flash('errorp','Invalid Password')
+                res.redirect('/login')
+            }
         }
         else{
-            req.flash('errorp','Invalid Password')
+            req.flash('erroru','User with this Email does not exist.')
             res.redirect('/login')
         }
-    }
-    else{
-        req.flash('erroru','User with this Email does not exist.')
-        res.redirect('/login')
+    } catch (error) {
+        throw error;
     }
 }
 app.post('/loginuser',logincheck)
@@ -310,24 +314,28 @@ app.get('/signup',(req,res)=>{
 
 // CHECK FOR USER SIGN UP
 app.post('/userRegister',async(req,res)=>{
-    const bodyr=req.body
-    const userr=await userRegister.findOne({email:bodyr.email})
-    if(userr==null){
-        try {
-            req.body.password=await bcrypt.hashSync(req.body.password,10)
-            const data=new userRegister(req.body)
-            data.save().then(()=>{
-                req.flash('success','Registration Successful. You can Login now.')
-                res.redirect('/login')
-            })
-        } 
-        catch (error) {
+    try {
+        const bodyr=req.body
+        const userr=await userRegister.findOne({email:bodyr.email})
+        if(userr==null){
+            try {
+                req.body.password=await bcrypt.hashSync(req.body.password,10)
+                const data=new userRegister(req.body)
+                data.save().then(()=>{
+                    req.flash('success','Registration Successful. You can Login now.')
+                    res.redirect('/login')
+                })
+            } 
+            catch (error) {
+                res.redirect('/signup')
+            }
+        }
+        else{
+            req.flash('errore','Email already exists.')
             res.redirect('/signup')
         }
-    }
-    else{
-        req.flash('errore','Email already exists.')
-        res.redirect('/signup')
+    } catch (error) {
+        throw error;
     }
 })
 
@@ -343,87 +351,100 @@ app.get('/forgotPassword',(req,res)=>{
 
 // CHECK FOR FORGOT PASSWORD
 app.post('/forgotp',async(req,res)=>{
-    const bodye=req.body
-    const usere=await userRegister.findOne({email:bodye.email})
-    userid=usere.id
-    // console.log(userid)
-    email=bodye.email
-    if(usere==null){
-        req.flash('errorem','User with this Email does not exist.')
-        res.redirect('/forgotPassword')
-    }
-    else{
-        var tok=await token.findOne({userId:userid})
-        if(!tok){
-            tok= await new token({
-                userId:userid,
-                token:crypto.randomBytes(32).toString('hex')
-            }).save()
+    try {
+        const bodye=req.body
+        const usere=await userRegister.findOne({email:bodye.email})
+        userid=usere.id
+        // console.log(userid)
+        email=bodye.email
+        if(usere==null){
+            req.flash('errorem','User with this Email does not exist.')
+            res.redirect('/forgotPassword')
         }
-        const link=`http://localhost:8000/passwordReset/${userid}/${tok.token}`
-
-        // TRANSPORTER FOR NODEMAILER
-        var transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'healthandgenstore@gmail.com',
-                pass: 'hjsfqwzdmkxokfeu'
+        else{
+            var tok=await token.findOne({userId:userid})
+            if(!tok){
+                tok= await new token({
+                    userId:userid,
+                    token:crypto.randomBytes(32).toString('hex')
+                }).save()
             }
-        });
-        // SETTING MAIL OPTIONS
-        var mailOptions = {
-            from: 'healthandgenstore@gmail.com',
-            to: email,
-            subject: 'Password Reset',
-            text: link
-        };
-        transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-              console.log(error);
-            } else {
-              console.log('Email sent: ' + info.response);
-            }
-          });
-          req.flash('successlink','An email with password reset link has been sent to your email.')
-          res.redirect('/forgotPassVerify')
+            const link=`http://localhost:8000/passwordReset/${userid}/${tok.token}`
+    
+            // TRANSPORTER FOR NODEMAILER
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'healthandgenstore@gmail.com',
+                    pass: 'hjsfqwzdmkxokfeu'
+                }
+            });
+            // SETTING MAIL OPTIONS
+            var mailOptions = {
+                from: 'healthandgenstore@gmail.com',
+                to: email,
+                subject: 'Password Reset',
+                text: link
+            };
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+              });
+              req.flash('successlink','An email with password reset link has been sent to your email.')
+              res.redirect('/forgotPassVerify')
+        } 
+    } catch (error) {
+        throw error;
     }
 })
 
 // FORGOT PASSWORD - PASSWORD RESET
 app.get('/passwordReset/:userId/:token',async(req,res)=>{
-    const user = await userRegister.findById(req.params.userId);
-    var userid=req.params.userId
-        if (!user) {
-            return res.status(400).send("invalid link or expired");
+    try {
+        const user = await userRegister.findById(req.params.userId);
+        var userid=req.params.userId
+            if (!user) {
+                return res.status(400).send("invalid link or expired");
+            }
+        const tok=await token.findOne({
+            userId:userid,
+            token:req.params.token
+        })
+        if(!tok){
+            return res.status(400).send('<h2 style="text-align:center;font-size:30px">Invalid Link or Expired.</h2>')
         }
-    const tok=await token.findOne({
-        userId:userid,
-        token:req.params.token
-    })
-    if(!tok){
-        return res.status(400).send('<h2 style="text-align:center;font-size:30px">Invalid Link or Expired.</h2>')
+        res.render('changePassword.ejs',{errorn:req.flash('errorn')})
+        await(token.findOneAndDelete({userId:userid}))
+        
+    } catch (error) {
+        throw error;
     }
-    res.render('changePassword.ejs',{errorn:req.flash('errorn')})
-    await(token.findOneAndDelete({userId:userid}))
 })
 
 // FORGOT PASSWORD - PASSWORD RESET REQUEST
 app.post('/reset',async(req,res)=>{
-    var bodyreset=req.body
-    var userreset=await userRegister.findOne({email:bodyreset.email})
-    userId=userreset.id
-    // console.log(userId)
-    bodyreset.confirmPassword=await bcrypt.hashSync(req.body.confirmPassword,10)
-    const confirmPassword=await bcrypt.compareSync(bodyreset.newPassword,bodyreset.confirmPassword)
-    if(confirmPassword){
-        bodyreset.confirmPassword=await bcrypt.hashSync(req.body.newPassword,10)
-        await userRegister.updateOne({_id:userId},{$set:{password:bodyreset.confirmPassword}})
-        req.flash('successp','Password Reset Successful. You can login now.')
-        res.redirect('/login')
-    }
-    else{
-        req.flash('errorn','New Password and Confirm Password do not match.')
-        return res.render('changePassword.ejs',{errorn:req.flash('errorn')})
+    try {
+        var bodyreset=req.body
+        var userreset=await userRegister.findOne({email:bodyreset.email})
+        userId=userreset.id
+        // console.log(userId)
+        bodyreset.confirmPassword=await bcrypt.hashSync(req.body.confirmPassword,10)
+        const confirmPassword=await bcrypt.compareSync(bodyreset.newPassword,bodyreset.confirmPassword)
+        if(confirmPassword){
+            bodyreset.confirmPassword=await bcrypt.hashSync(req.body.newPassword,10)
+            await userRegister.updateOne({_id:userId},{$set:{password:bodyreset.confirmPassword}})
+            req.flash('successp','Password Reset Successful. You can login now.')
+            res.redirect('/login')
+        }
+        else{
+            req.flash('errorn','New Password and Confirm Password do not match.')
+            return res.render('changePassword.ejs',{errorn:req.flash('errorn')})
+        }
+    } catch (error) {
+        throw error;
     }
 })
 
@@ -452,22 +473,26 @@ app.get('/searchProduct',(req,res)=>{
 
 // SEARCH BAR REQUEST
 app.post('/searchItem',async(req,res)=>{
-    if(req.session.email){
-        var searchitem=req.body
-        // var regex=new RegExp(searchitem.search)
-        Product.find({description:{$regex:searchitem.search,$options:'$i'}},(err,products)=>{
-            // console.log(products.length())
-            if(products.length==0){
-                res.status(200).render('searchDisplay.ejs',{product:null})
-            }
-            else{
-                res.status(200).render('searchDisplay.ejs',{product:products})
-            }
-        })
-    }
-    else{
-        req.flash('messagea','You need to login first.')
-        res.redirect('/login')
+    try {
+        if(req.session.email){
+            var searchitem=req.body
+            // var regex=new RegExp(searchitem.search)
+            Product.find({description:{$regex:searchitem.search,$options:'$i'}},(err,products)=>{
+                // console.log(products.length())
+                if(products.length==0){
+                    res.status(200).render('searchDisplay.ejs',{product:null})
+                }
+                else{
+                    res.status(200).render('searchDisplay.ejs',{product:products})
+                }
+            })
+        }
+        else{
+            req.flash('messagea','You need to login first.')
+            res.redirect('/login')
+        }
+    } catch (error) {
+        throw error;
     }
 })
 
@@ -563,42 +588,50 @@ app.get('/buyNow/:id',(req,res)=>{
 
 // MY PROFILE PAGE
 app.get('/myProfile',async(req,res)=>{
-    if(req.session.email){
-        var userp=await userRegister.findOne({email:req.session.email})
-        // console.log(userp)
-        var userfname=userp.fname
-        var userlname=userp.lname
-        var email=userp.email
-        var contact=userp.contact
-        var city=userp.city
-        var pincode=userp.pcode
-        res.status(200).render('myProfile.ejs',{userfname:userp.fname,userlname:userp.lname,email:userp.email,contact:userp.contact,city:userp.city,pincode:userp.pcode})
-    }
-    else{
-        req.flash('messagea','You need to login first.')
-        res.redirect('/login')
+    try {
+        if(req.session.email){
+            var userp=await userRegister.findOne({email:req.session.email})
+            // console.log(userp)
+            var userfname=userp.fname
+            var userlname=userp.lname
+            var email=userp.email
+            var contact=userp.contact
+            var city=userp.city
+            var pincode=userp.pcode
+            res.status(200).render('myProfile.ejs',{userfname:userp.fname,userlname:userp.lname,email:userp.email,contact:userp.contact,city:userp.city,pincode:userp.pcode})
+        }
+        else{
+            req.flash('messagea','You need to login first.')
+            res.redirect('/login')
+        }
+    } catch (error) {
+        throw error;
     }
 })
 
 // MY ORDERS PAGE
 app.get('/myOrders',async(req,res)=>{
-    if(req.session.email){
-        // console.log(req.session.email)
-        var userfind = await userRegister.findOne({email:req.session.email})
-        id=userfind.id
-        // console.log(id)
-        buyItem.find({user:id},(err,orders)=>{
-            if(orders.length==0){
-                res.render('myorders.ejs',{product:null,order:null,successBuyDetails:req.flash('successBuyDetails')})
-            }
-            else{
-                res.status(200).render('myorders.ejs',{order:orders,successBuyDetails:req.flash('successBuyDetails')})
-            }
-        })
-    }
-    else{
-        req.flash('messagea','You need to login first.')
-        res.redirect('/login')
+    try {
+        if(req.session.email){
+            // console.log(req.session.email)
+            var userfind = await userRegister.findOne({email:req.session.email})
+            id=userfind.id
+            // console.log(id)
+            buyItem.find({user:id},(err,orders)=>{
+                if(orders.length==0){
+                    res.render('myorders.ejs',{product:null,order:null,successBuyDetails:req.flash('successBuyDetails')})
+                }
+                else{
+                    res.status(200).render('myorders.ejs',{order:orders,successBuyDetails:req.flash('successBuyDetails')})
+                }
+            })
+        }
+        else{
+            req.flash('messagea','You need to login first.')
+            res.redirect('/login')
+        }
+    } catch (error) {
+        throw error;
     }
 })
 
@@ -615,143 +648,159 @@ app.get('/writeToUs',(req,res)=>{
 
 // MESSAGE SEND REQUEST
 app.post('/message',async(req,res)=>{
-    const msg=new message({
-        name:req.body.name,
-        email:req.body.email,
-        message:req.body.message
-    })
-    msg.save().then(()=>{
-        req.flash('messageSent','Thank You for writing to us. We will get back to you shortly.')
-        res.redirect('/writeToUs')
-    })
+    try {
+        const msg=new message({
+            name:req.body.name,
+            email:req.body.email,
+            message:req.body.message
+        })
+        msg.save().then(()=>{
+            req.flash('messageSent','Thank You for writing to us. We will get back to you shortly.')
+            res.redirect('/writeToUs')
+        })
+    } catch (error) {
+        throw error;
+    }
 })
 
 // BUY ITEM REQUEST
 app.post('/buyItem/:id',async(req,res)=>{
-    if(req.session.email){
-        var productid=req.params.id
-        var findProduct=Product.findById(productid,function(err,products){
-            if(err){
-                return res.redirect('/products')
+    try {
+        if(req.session.email){
+            var productid=req.params.id
+            var findProduct=Product.findById(productid,function(err,products){
+                if(err){
+                    return res.redirect('/products')
+                }
+                id=products.id
+                image=products.image
+                alt=products.alt
+                name=products.name
+                title=products.title
+                categ=products.category
+                description=products.description
+                price=products.price
+                // console.log(price)
+            })
+            var userp=await userRegister.findOne({email:req.session.email})
+            console.log(req.body.paymentMode)
+            fname=userp.fname
+            lname=userp.lname
+            uid=userp.id
+            // console.log(id)
+            qty=req.body.quantity
+            pri=price
+            total=qty*pri
+            var currentDate = new Date();
+            var d= currentDate.getDate();
+            var month = currentDate.getMonth();
+            var year = currentDate.getFullYear();
+            var dateString = d + "-" +(month + 1) + "-" + year;
+            var order=new buyItem({
+                user:uid,
+                firstname:fname,
+                lastname:lname,
+                image:image,
+                alt:alt,
+                contact:req.body.contact,
+                itemId:productid,
+                itemname:name,
+                itemprice:price,
+                totalPrice:total,
+                quantity:req.body.quantity,
+                address:req.body.address,
+                city:req.body.city,
+                state:req.body.state,
+                pcode:req.body.pcode,
+                paymentMode:req.body.paymentMode,
+                date:dateString,
+                dateTime:new Date()
+            })
+            var usersee=await userRegister.findOne({_id:uid})
+            email=usersee.email
+            // console.log(email)
+    
+            if(req.body.paymentMode=='Cash_on_delivery'){
+                // TRANSPORTER FOR NODEMAILER
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'healthandgenstore@gmail.com',
+                        pass: 'hjsfqwzdmkxokfeu'
+                    }
+                });
+                // SETTING MAIL OPTIONS
+                var mailOptions = {
+                    from: 'healthandgenstore@gmail.com',
+                    to: email,
+                    subject: 'Order Placed',
+                    text: `Your Order has been placed successfully and will be delivered to you soon. You can find out the details of your order below.\nProduct Name : ${name}\nProduct Price :${pri}\nQuantity : ${qty}\nTotal Price : ${total}\nOrder Placed on : ${dateString}\nMode of Payment : ${req.body.paymentMode}\n\nThank You for Shopping with Us.\nRegards Health&Gen Store.`
+                };
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
             }
-            id=products.id
-            image=products.image
-            alt=products.alt
-            name=products.name
-            title=products.title
-            categ=products.category
-            description=products.description
-            price=products.price
-            // console.log(price)
-        })
-        var userp=await userRegister.findOne({email:req.session.email})
-        console.log(req.body.paymentMode)
-        fname=userp.fname
-        lname=userp.lname
-        uid=userp.id
-        // console.log(id)
-        qty=req.body.quantity
-        pri=price
-        total=qty*pri
-        var currentDate = new Date();
-        var d= currentDate.getDate();
-        var month = currentDate.getMonth();
-        var year = currentDate.getFullYear();
-        var dateString = d + "-" +(month + 1) + "-" + year;
-        var order=new buyItem({
-            user:uid,
-            firstname:fname,
-            lastname:lname,
-            image:image,
-            alt:alt,
-            contact:req.body.contact,
-            itemId:productid,
-            itemname:name,
-            itemprice:price,
-            totalPrice:total,
-            quantity:req.body.quantity,
-            address:req.body.address,
-            city:req.body.city,
-            state:req.body.state,
-            pcode:req.body.pcode,
-            paymentMode:req.body.paymentMode,
-            date:dateString,
-            dateTime:new Date()
-        })
-        var usersee=await userRegister.findOne({_id:uid})
-        email=usersee.email
-        // console.log(email)
-
-        if(req.body.paymentMode=='Cash_on_delivery'){
-            // TRANSPORTER FOR NODEMAILER
-            var transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: 'healthandgenstore@gmail.com',
-                    pass: 'hjsfqwzdmkxokfeu'
-                }
-            });
-            // SETTING MAIL OPTIONS
-            var mailOptions = {
-                from: 'healthandgenstore@gmail.com',
-                to: email,
-                subject: 'Order Placed',
-                text: `Your Order has been placed successfully and will be delivered to you soon. You can find out the details of your order below.\nProduct Name : ${name}\nProduct Price :${pri}\nQuantity : ${qty}\nTotal Price : ${total}\nOrder Placed on : ${dateString}\nMode of Payment : ${req.body.paymentMode}\n\nThank You for Shopping with Us.\nRegards Health&Gen Store.`
-            };
-            transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log('Email sent: ' + info.response);
-                }
-            });
+            order.save().then(()=>{
+                req.flash('successBuyDetails','Order Placed Successfully.')
+                res.redirect('/myOrders')
+            })
         }
-        order.save().then(()=>{
-            req.flash('successBuyDetails','Order Placed Successfully.')
-            res.redirect('/myOrders')
-        })
+        else{
+            req.flash('messagea','You need to login first.')
+            res.redirect('/login')
+        } 
+    } catch (error) {
+        throw error;
     }
-    else{
-        req.flash('messagea','You need to login first.')
-        res.redirect('/login')
-    } 
 })
 
 // SETTINGS PAGE
 app.get('/settings',async(req,res)=>{
-    if(req.session.email){
-        res.status(200).render('settings.ejs',{successp:req.flash('successp'),errorn:req.flash('errorn'),erroro:req.flash('erroro'),successCont:req.flash('successCont'),successCity:req.flash('successCity')})
-    }
-    else{
-        req.flash('messagea','You need to login first.')
-        res.redirect('/login')
+    try {
+        if(req.session.email){
+            res.status(200).render('settings.ejs',{successp:req.flash('successp'),errorn:req.flash('errorn'),erroro:req.flash('erroro'),successCont:req.flash('successCont'),successCity:req.flash('successCity')})
+        }
+        else{
+            req.flash('messagea','You need to login first.')
+            res.redirect('/login')
+        }
+    } catch (error) {
+        throw error;
     }
 })
 
 // PASSWORD CHANGE REQUEST
 app.post('/change',async(req,res)=>{
-    var bodyreset=req.body
-    var userreset=await userRegister.findOne({email:req.session.email})
-    userId=userreset.id
-    // console.log(userId)
-    const checkPassword=await bcrypt.compareSync(bodyreset.oldPassword,userreset.password)
-    if(checkPassword){
-        bodyreset.confirmPassword=await bcrypt.hashSync(req.body.confirmPassword,10)
-        const confirmPassword=await bcrypt.compareSync(bodyreset.newPassword,bodyreset.confirmPassword)
-        if(confirmPassword){
-            bodyreset.confirmPassword=await bcrypt.hashSync(req.body.newPassword,10)
-            await userRegister.updateOne({_id:userId},{$set:{password:bodyreset.confirmPassword}})
-            req.flash('successp','Password Changed Successfully.')
-            res.redirect('/settings')
+    try {
+        var bodyreset=req.body
+        var userreset=await userRegister.findOne({email:req.session.email})
+        userId=userreset.id
+        // console.log(userId)
+        const checkPassword=await bcrypt.compareSync(bodyreset.oldPassword,userreset.password)
+        if(checkPassword){
+            bodyreset.confirmPassword=await bcrypt.hashSync(req.body.confirmPassword,10)
+            const confirmPassword=await bcrypt.compareSync(bodyreset.newPassword,bodyreset.confirmPassword)
+            if(confirmPassword){
+                bodyreset.confirmPassword=await bcrypt.hashSync(req.body.newPassword,10)
+                await userRegister.updateOne({_id:userId},{$set:{password:bodyreset.confirmPassword}})
+                req.flash('successp','Password Changed Successfully.')
+                res.redirect('/settings')
+            }
+            else{
+                req.flash('errorn','New Password and Confirm Password do not match.')
+                res.redirect('/settings')
+            }
         }
         else{
-            req.flash('errorn','New Password and Confirm Password do not match.')
+            req.flash('erroro','Invalid Old Password.')
             res.redirect('/settings')
         }
-    }
-    else{
-        req.flash('erroro','Invalid Old Password.')
-        res.redirect('/settings')
+    } catch (error) {
+        throw error;
     }
 })
 
